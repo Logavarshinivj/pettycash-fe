@@ -49,7 +49,7 @@ const Edit = ({date1}) => {
 
 
   const getTransaction=async()=>{
-    var result=await fetch(`https://pettycash-backend.vercel.app/get-trans/${id}`)
+    var result=await fetch(`http://localhost:4000/get-trans/${id}`)
     result= await result.json()
     console.log(result)
     console.log(result.amount)
@@ -65,7 +65,7 @@ const Edit = ({date1}) => {
   
 
     const updateTransaction=async()=>{
-        let result=await fetch(`https://pettycash-backend.vercel.app/update-trans/${id}`,
+        let result=await fetch(`http://localhost:4000/update-trans/${id}`,
         {
           method: 'PUT',
           body: JSON.stringify({ voucher,amount,type,purpose,date}),

@@ -17,7 +17,7 @@ function Transaction() {
   const[date,setDate]=useState([])
   const deleteUser=async(id)=>{
     console.warn(id)
-  let result= await fetch (`https://pettycash-backend.vercel.app/get-trans/${id}`,{
+  let result= await fetch (`http://localhost:4000/get-trans/${id}`,{
     method: 'DELETE',
   });
   result=await result.json();
@@ -92,7 +92,7 @@ function Transaction() {
         const getAllTransactions=async()=>{
             // try{
               const user=JSON.parse(localStorage.getItem('user'));
-              const res=await axios.get("https://pettycash-backend.vercel.app/get-trans")
+              const res=await axios.post("http://localhost:4000/get-trans",{userId:user._id})
               setAllTransaction(res.data)
               console.log(res.data)
             // }

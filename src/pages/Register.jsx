@@ -8,6 +8,8 @@ import { useEffect } from 'react';
 function Register() {
   const [email,setEmail]=useState()
   const [password,setPassword]=useState()
+  const [emailError, setEmailError] = useState('')
+  const [passwordError, setPasswordError] = useState('')
   const navigate=useNavigate()
   useEffect(()=>{
     const auth=localStorage.getItem('user')
@@ -16,7 +18,25 @@ function Register() {
     }
   },[])
   const collectData=async()=>{
-    let result=await fetch("https://pettycash-backend.vercel.app/register-petty",
+    setEmailError('')
+    setPasswordError('')
+    if (!email) {
+      setEmailError('Email is required')
+      return
+    }
+    if (!password) {
+      setPasswordError('Password is required')
+      return
+    }
+    if (!/\S+@\S+\.\S+/.test(email)) {
+      setEmailError('Please enter a valid email address')
+      return
+    }
+    if (password.length < 6) {
+      setPasswordError('Password must be at least 6 characters long')
+      return
+    }
+    let result=await fetch("http://localhost:4000/register-petty",
     {
       method: 'POST',
       body: JSON.stringify({email,password}),
@@ -24,10 +44,14 @@ function Register() {
     })
   
     result= await result.json()
-    if(result){
+    if(result.message === 'User already exists'){
+      alert("User already exists")
+  }
+    else if(result){
         localStorage.setItem("user", JSON.stringify(result))
        
         alert("Registration Successful")
+        navigate("/login-petty")
           
       }
     else{
@@ -51,12 +75,14 @@ function Register() {
         </label>
         <input type="email" name="email" className="Uname" placeholder="Email Address" value={email} onChange={(event)=>setEmail(event.target.value)}/>
         <br></br>
+        {emailError && <p className="error" style={{ color: "red" }}>{emailError}</p>}
         <br></br>
         <label className='lbl2'><b>Create Password
         </b>
         </label>
         <input type="password" name="pass" className="pass"  placeholder="Password" value={password} onChange={(event)=>setPassword(event.target.value)}/>
         <br></br>
+        {passwordError && <p className="error" style={{ color: "red" }} >{passwordError}</p>}
         <br></br>
       {/* <TextField  id="standard-basic" label="Email Address" variant="standard"color="secondary" type="email" placeholder="Enter your email address" value={email} onChange={(event)=>setEmail(event.target.value)}/>
       <TextField id="standard-basic" label="Password" variant="standard"color="secondary" type="password"  placeholder="Set your password" value={password} onChange={(event)=>setPassword(event.target.value)}/> */}
