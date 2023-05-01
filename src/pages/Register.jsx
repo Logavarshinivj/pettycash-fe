@@ -21,22 +21,22 @@ function Register() {
     setEmailError('')
     setPasswordError('')
     if (!email) {
-      setEmailError('Email is required')
+      setEmailError('Email is required*')
       return
     }
     if (!password) {
-      setPasswordError('Password is required')
+      setPasswordError('Password is required*')
       return
     }
     if (!/\S+@\S+\.\S+/.test(email)) {
-      setEmailError('Please enter a valid email address')
+      setEmailError('Please enter a valid email address*')
       return
     }
     if (password.length < 6) {
-      setPasswordError('Password must be at least 6 characters long')
+      setPasswordError('Password must be at least 6 characters long*')
       return
     }
-    let result=await fetch("http://localhost:4000/register-petty",
+    let result=await fetch("https://pettycash-be-rm75.vercel.app/register-petty",
     {
       method: 'POST',
       body: JSON.stringify({email,password}),
