@@ -48,10 +48,11 @@ function Register() {
       alert("User already exists")
   }
     else if(result){
+     
         localStorage.setItem("user", JSON.stringify(result))
-       
-        alert("Registration Successful")
         navigate("/login-petty")
+        alert("Registration Successful")
+      
           
       }
     else{
