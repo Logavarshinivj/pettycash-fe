@@ -11,12 +11,12 @@ function Register() {
   const [emailError, setEmailError] = useState('')
   const [passwordError, setPasswordError] = useState('')
   const navigate=useNavigate()
-  useEffect(()=>{
-    const auth=localStorage.getItem('user')
-    if(auth){
-      navigate("/")
-    }
-  },[])
+  // useEffect(()=>{
+  //   const auth=localStorage.getItem('user')
+  //   if(auth){
+  //     navigate("/")
+  //   }
+  // },[])
   const collectData=async()=>{
     setEmailError('')
     setPasswordError('')
